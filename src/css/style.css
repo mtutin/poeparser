@@ -1,0 +1,32 @@
+﻿body {
+    font-size: 0.8em;
+    background-color: black;
+    color: lightgray;
+    font-size: 1.2em;
+}
+
+#file_selection {
+    width: 100%;
+}
+
+.opstatus {
+    height: 32px;
+    padding: 4px;
+    display: inline-block;
+}
+    .opstatus img {
+        visibility: hidden;
+        margin-right: 7px;
+    }
+
+    .opstatus.running img{
+        visibility:visible;
+    }
+
+.gain {
+    color: darkgreen;
+}
+
+.loss {
+    color: darkred;
+}

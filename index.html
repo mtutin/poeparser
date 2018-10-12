@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>POE client log file parser</title>
+</head>
+<body>
+    <link rel="stylesheet" href="src/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="src/js/parser.js"></script>
+    <script src="src/js/app.js"></script>
+
+    <div id="file_selection">
+        <input type="file" id="log_file_to_parse" name="log_file">
+
+        <div id="file_open_status" class="opstatus">
+            <img src="src/img/processing.gif" width="16" height="16" />
+            <span></span>
+        </div>
+    </div>
+
+    <table id="trade_results"></table>
+</body>
+</html>
