@@ -19,8 +19,8 @@ class TradeLog {
         }
         else {
             var patterns = [
-                new RegExp('(@.*) .*: .*to buy your (.*) listed for (.*) in .*'),
-                new RegExp('(@.*) .*: .*to buy your (.*) for my (.*) in .*'),
+                new RegExp('(@[^ ]*) .*: .*to buy your (.*) listed for (.*) in .*'),
+                new RegExp('(@[^ ]*) .*: .*to buy your (.*) for my (.*) in .*'),
             ];
             for (var p = 0; p < patterns.length; p++) {
                 var tradeRequestRes = patterns[p].exec(msg);
