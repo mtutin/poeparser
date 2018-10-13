@@ -82,7 +82,8 @@ function parse_file(fileobj) {
                 }
             }
 
-            table_content = "<tr><th>Date</th><th>Buy/Sell</th><th>Item</th><th>Price</th></tr>"
+            table_content = "<thead><tr><th>Date</th><th>Buy/Sell</th><th>Item</th><th>Price</th></tr></thead>"
+			table_content += "<tbody>"
             for (var i = tradeLog.trade.length - 1; i >= 0; i--) {
                 var r = tradeLog.trade[i];
                 if (r[0] == 'buy') {
@@ -91,13 +92,16 @@ function parse_file(fileobj) {
                 else
                     table_content += "<tr class='sell'><td>" + r[1] + "</td><td>" + r[0] + "</td><td>" + r[2] + "</td><td class='gain'>+" + r[3] + "</td></tr>"
             }
+			table_content += "</tbody>"
 
-            $("#trade_results").html(table_content);
+            $("#trade_results_table").html(table_content);
         }
 
         $("#file_open_status").removeClass('running');
         $("#file_selection").prop("disabled", false);
         $("#file_open_status span").text("");
+		
+		$("#trade_results_section").removeClass('hidden');
     }
     reader.readAsText(fileobj)
 }

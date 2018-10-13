@@ -1,10 +1,36 @@
 ﻿body {
     font-size: 0.8em;
     background-color: black;
+	background-image: url('../img/background.jpg');
     color: lightgray;
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
+h1 {
+	text-align: center;
+	font-size: 2em;
+}
+
+h2 {
+	text-align: left;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin: 0px;
+	margin-bottom: 7px;
+}
+
+.section {
+	background-color: #222222;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #2C2A2A;
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	margin-bottom: 7px;
+	
+}
 #file_selection {
     width: 100%;
 }
@@ -24,9 +50,32 @@
     }
 
 .gain {
-    color: darkgreen;
+    color: green;
 }
 
 .loss {
-    color: darkred;
+    color: red;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+table {
+	border-spacing:0px;
+}
+
+table td {
+	padding-left: 7px;
+}
+
+table th {
+	border-bottom:3px solid #BC9A00;
+}
+table tbody td:first-child {
+	color: darkgray;
+}
+
+table tbody tr:hover {
+   background-color: #111111;
 }
