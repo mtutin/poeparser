@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>POE client log file parser</title>
+</head>
+<body>
+    <link rel="stylesheet" href="src/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="src/js/parser.js"></script>
+    <script src="src/js/currency_eval.js"></script>
+
+    <script>
+		$(document).ready(function () {
+			$("#currency_eval_btn").click(currency_eval);
+		})
+    </script>
+
+    <button type="button" id="currency_eval_btn">Evaluate currency</button>
+    <div id="currency_eval_results"></div>
+</body>
+</html>
