@@ -10,6 +10,9 @@ function request_currency_offers(want, have, prices) {
 
         var first_range = Math.ceil(divTags.length * 0.1);
         var second_range = Math.ceil(divTags.length * 0.2);
+        if(second_range == first_range) {
+            second_range = first_range+1;
+        }
 
         var rates = [[],[],[]];
         for (var i = 0; i < divTags.length; i++) {
@@ -147,15 +150,29 @@ function currency_eval() {
             find_currency_id_by_name(currency_list, 'fusing'),
             find_currency_id_by_name(currency_list, 'gcp'),
             find_currency_id_by_name(currency_list, 'chisel'),
-            find_currency_id_by_name(currency_list, 'scouring')
+            find_currency_id_by_name(currency_list, 'scouring'),
+            find_currency_id_by_name(currency_list, 'regal')
         ];
 
         var trade_chains = compose_trade_chains(curr_to_invest, curr_to_eval, 2);
 
         var prices = [];
         var req_currency_offers = [];
+        var req_currency_offers_pairs = [];
         for(var i=0;i<trade_chains.length;i++) {
             for(var j=1;j<trade_chains[i].length;j++) {
+                var already_there = false;
+                for(var k=0;k<req_currency_offers_pairs.length;k++){
+                    if( req_currency_offers_pairs[k][0] == trade_chains[i][j-1] &&
+                        req_currency_offers_pairs[k][1] == trade_chains[i][j]){
+                            already_there = true;
+                            break;
+                        }
+                }
+                if(already_there){
+                    continue;
+                }
+                req_currency_offers_pairs.push([trade_chains[i][j-1], trade_chains[i][j]]);
                 var r = request_currency_offers(trade_chains[i][j-1], trade_chains[i][j], prices);
                 req_currency_offers.push(r);
             }
