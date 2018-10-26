@@ -1,6 +1,6 @@
 
 function request_currency_offers(want, have, prices) {
-    var url = 'http://currency.poe.trade/search?league=Delve&online=x&stock=&want='+want+'&have='+have
+    var url = 'http://currency.poe.trade/search?league=Delve&online=x&stock=10&want='+want+'&have='+have
 
     return $.get('https://allorigins.me/get?method=raw&url=' + encodeURIComponent(url), function(data) {
         parser=new DOMParser();
@@ -15,18 +15,29 @@ function request_currency_offers(want, have, prices) {
         }
 
         var rates = [[],[],[]];
+        var offers = [[],[],[]];
+        var offers_max = 5;
         for (var i = 0; i < divTags.length; i++) {
             var offer_sell = parseFloat(divTags[i].getAttribute('data-sellvalue'));
             var offer_buy = divTags[i].getAttribute('data-buyvalue');
 
             if(i<first_range) {
                 rates[0].push(offer_buy/offer_sell);
+                if(offers[0].length < offers_max) {
+                    offers[0].push([offer_buy, offer_sell]);
+                }
             }
             else if(i >= first_range && i < second_range) {
                 rates[1].push(offer_buy/offer_sell);
+                if(offers[1].length < offers_max) {
+                    offers[1].push([offer_buy, offer_sell]);
+                }
             }
             else {
                 rates[2].push(offer_buy/offer_sell);
+                if(offers[2].length < offers_max) {
+                    offers[2].push([offer_buy, offer_sell]);
+                }
             }
         }
 
@@ -44,9 +55,15 @@ function request_currency_offers(want, have, prices) {
             "want":want,
             "have":have,
             "offers":divTags.length,
-            "range1":rates_avg[0],
-            "range2":rates_avg[1],
-            "range3":rates_avg[2]
+            "range1": {
+                "rate":rates_avg[0],
+                "offers":offers[0]},
+            "range2": {
+                "rate":rates_avg[1],
+                "offers":offers[1]},
+            "range3": {
+                "rate":rates_avg[2],
+                "offers":offers[2]}
         }
         prices.push(record);
     });
@@ -181,19 +198,25 @@ function currency_eval() {
         $.when.apply($, req_currency_offers).done(function(){
             var amount_to_invest = 100;
 
-            var table_str = "<table>";
+            var table_data = [];
             for(var i=0;i<trade_chains.length;i++){
-                table_str += "<tr><td>"
                 var value = amount_to_invest;
-                table_str += find_currency_name_by_id(currency_list, trade_chains[i][0]);
+                var curr_str = find_currency_name_by_id(currency_list, trade_chains[i][0]);
                 for(var j=1;j<trade_chains[i].length;j++) {
                     var rate = find_rate(trade_chains[i][j-1], trade_chains[i][j], prices);
-                    table_str += " =&gt; " + find_currency_name_by_id(currency_list, trade_chains[i][j]) + " [offers " + rate.offers + "]";
-                    value *= rate.range1;
+                    curr_str += " =&gt; " + find_currency_name_by_id(currency_list, trade_chains[i][j]) + " [offers " + rate.offers + "]";
+                    value *= rate.range1.rate;
                 }
-                table_str += "</td><td>";
-                table_str += value - amount_to_invest;
-                table_str += "</td></tr>"
+                table_data.push([value - amount_to_invest, curr_str]);
+            }
+
+            table_data.sort(function(a, b){
+                return b[0] - a[0];
+            });
+            var table_str = "<table>";
+            for(var i=0;i<table_data.length;i++){
+                table_str += "<tr><td>" + table_data[i][1] + "</td><td>";
+                table_str += Number.parseFloat(table_data[i][0]).toFixed(2) + "</td></tr>";
             }
             table_str += "</table>";
             
