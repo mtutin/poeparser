@@ -1,10 +1,10 @@
 
 function request_currency_offers(want, have, prices) {
-    var url = 'http://currency.poe.trade/search?league=Delve&online=x&stock=10&want='+want+'&have='+have
+    var url = 'http://currency.poe.trade/search?league=Betrayal&online=x&stock=10&want='+want+'&have='+have
 
-    return $.get('https://allorigins.me/get?method=raw&url=' + encodeURIComponent(url), function(data) {
+    return $.get('https://api.allorigins.ml/get?url=' + encodeURIComponent(url), function(data) {
         parser=new DOMParser();
-        xmlDoc=parser.parseFromString(data, 'text/html');
+        xmlDoc=parser.parseFromString(data.contents, 'text/html');
 
         var divTags = xmlDoc.documentElement.querySelectorAll ("div[data-username]");
 
@@ -70,9 +70,9 @@ function request_currency_offers(want, have, prices) {
 }
 
 function request_currency_list(curr_list) {
-    return $.get('https://allorigins.me/get?method=raw&url=' + encodeURIComponent('http://currency.poe.trade'), function(data) {
+    return $.get('https://api.allorigins.ml/get?url=' + encodeURIComponent('http://currency.poe.trade'), function(data) {
         parser=new DOMParser();
-        xmlDoc=parser.parseFromString(data, 'text/html');
+		xmlDoc=parser.parseFromString(data.contents, 'text/html');
 
         var offect_cat_tag = xmlDoc.documentElement.querySelector("#cat-want-0");
         var divTags = offect_cat_tag.querySelectorAll ("div[data-title]");
