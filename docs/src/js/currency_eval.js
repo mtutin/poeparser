@@ -1,8 +1,8 @@
 
 function request_currency_offers(want, have, prices) {
-    var url = 'http://currency.poe.trade/search?league=Betrayal&online=x&stock=10&want='+want+'&have='+have
+    var url = 'http://currency.poe.trade/search?league=Legion&online=x&stock=10&want='+want+'&have='+have
 
-    return $.get('https://api.allorigins.ml/get?url=' + encodeURIComponent(url), function(data) {
+    return $.get('https://api.allorigins.win/get?url=' + encodeURIComponent(url), function(data) {
         parser=new DOMParser();
         xmlDoc=parser.parseFromString(data.contents, 'text/html');
 
@@ -70,7 +70,7 @@ function request_currency_offers(want, have, prices) {
 }
 
 function request_currency_list(curr_list) {
-    return $.get('https://api.allorigins.ml/get?url=' + encodeURIComponent('http://currency.poe.trade'), function(data) {
+    return $.get('https://api.allorigins.win/get?url=' + encodeURIComponent('http://currency.poe.trade'), function(data) {
         parser=new DOMParser();
 		xmlDoc=parser.parseFromString(data.contents, 'text/html');
 
